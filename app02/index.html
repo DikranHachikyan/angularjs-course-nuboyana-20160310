@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="WebApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=divice-width, initial-scale=1, user-scalable=yes">
+    <style>
+        
+ul {
+  list-style:none;
+  width:50%;
+}
+
+li a{
+  display: block;
+  text-decoration:none;
+}
+
+
+a img {
+  float:left;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+li{
+  clear:both;
+}
+
+li a img:hover{
+  border-radius:8px;
+  border: 1px solid #ccc;
+  
+}
+    </style>
+    <title>Web App</title>
+    <script src="js/lib/angular/angular.min.js"></script>
+    
+    <script src="js/app.js"></script>
+    
+</head>
+<body>
+    <div ng-controller="CategoryList">
+        <ul>
+            <li ng-repeat="(key,cat) in categories">
+                <a ng-href="#">
+                    <img ng-src="{{cat.thumbnail}}" alt="{{cat.title}}">
+                    <h3>{{cat.title}}</h3>
+                    <p>{{cat.description | limitTo:100}}...</p>
+                </a>
+            </li>
+        </ul>
+        <h4 ng-show="message">{{message}}</h4>
+    </div>
+</body>
+</html>
