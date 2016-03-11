@@ -1,0 +1,10 @@
+<ul>
+    <li ng-repeat="(key,cat) in categories">
+        <a ng-href="#/{{key}}/items">
+            <img ng-src="{{cat.thumbnail}}" alt="{{cat.title}}">
+            <h3>{{cat.title}}</h3>
+            <p>{{cat.description | limitTo:100}}...</p>
+        </a>
+    </li>
+</ul>
+<h4 ng-show="message">{{message}}</h4>

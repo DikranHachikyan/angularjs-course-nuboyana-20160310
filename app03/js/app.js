@@ -1,6 +1,8 @@
 var app = angular.module('WebApp',[
-    'ngRoute'
-]);
+    'ngRoute',
+    'firebase'
+])
+.constant('FIREBASE_URL', 'https://musi-store.firebaseio.com/');
 
 app.config(['$routeProvider', 
         function($routeProvider){
