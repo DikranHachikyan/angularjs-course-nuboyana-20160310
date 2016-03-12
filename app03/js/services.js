@@ -1,37 +1,43 @@
 app.factory('DataService',
-        ['$rootScope','$http',
-    function($rootScope,$http){
-
+        ['$rootScope','$firebaseObject','FIREBASE_URL',
+    function($rootScope,$firebaseObject,FIREBASE_URL){
+     var ref = new Firebase(FIREBASE_URL );
      var retObj = {
-        getCategories : function(){
-            $http.get('js/cd-db-firebase.json')
-              .then(function(response){
-            //console.log('response:',response);
-                $rootScope.categories =  response.data.categories;
-             })//on success
-          .catch(function(error){
-            $rootScope.message = error.message;
-          });
-        },//get categories
-        getItemsList : function(catid){
-            $http.get('js/cd-db-firebase.json')
-           .then( function(response){
-             $rootScope.items = response.data.collections[catid];
-           })//on success
-           .catch(function(error){
-             $rootScope.message = error.message;
-           });//on error
-        },//get items list in category catid 
-         getItemInfo: function(catid, itemid){
-             $http.get('js/cd-db-firebase.json')
-             .then( function(response){
-             $rootScope.item = response.data.collections[catid][itemid];
-             console.log('Item Info:', $rootScope.item)     
-           })//on success
-           .catch(function(error){
-             $rootScope.message = error.message;
-           });//on error
-         }//get item info
+        getItemInfo: function(catid,itemid){
+            var fbObj = $firebaseObject(ref.child('collections/'+ catid +'/' +itemid));
+                fbObj.$loaded()
+                 .then( function(data){
+                    $rootScope.item = data;
+                 })//on success
+                 .catch( function(error){
+                    console.log('Error getItemInfo:', error);
+                    $rootScope.message = error.message;
+                }); //on error
+        }, //get item info 
+        getItemsList: function(catid){
+            var fbObj = $firebaseObject(ref.child('collections').child(catid));
+            
+            fbObj.$loaded()
+                 .then( function(data){
+                    $rootScope.items = data;
+                 })//on success
+                 .catch( function(error){
+                    console.log('Error getItemsList:', error);
+                    $rootScope.message = error.message;
+                }); //on error
+        }, //get items in category catid 
+        getCategories: function(){
+            var fbObj = $firebaseObject(ref.child('categories'));
+            fbObj.$loaded()
+                 .then(function(data){
+                    $rootScope.categories = data;
+                    //console.log('data:', data);
+                 }) //on success
+                 .catch(function(error){
+                    console.log('Error getCategories:', error);
+                    $rootScope.message = error.message;
+                 });//on error
+        }//get categories 
      };
         
     return retObj;    
