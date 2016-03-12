@@ -1,0 +1,21 @@
+<h2>Registration</h2>
+<form ng-submit="register(user)" novalidate name="rgForm">
+    <fieldlist>
+
+    <input type="text" name="firstname" placeholder="First Name" ng-model="user.firstname" ng-required="true"><br>
+    <p ng-show="rgForm.firstname.$touched && rgForm.firstname.$invalid">First Name is required</p>
+
+    <input type="text" name="lastname" placeholder="Last Name" ng-model="user.lastname" ng-required="true"><br>
+    <p ng-show="rgForm.lastname.$touched && rgForm.lastname.$invalid">Last Name is required</p>
+
+    <input type="email" name="mail" placeholder="E-mail"ng-model="user.mail" ng-required="true"><br>
+    <p ng-show="rgForm.mail.$touched && rgForm.mail.$invalid">E-mail is required</p>
+
+    <input type="password" name="pass1" placeholder="Password" ng-model="user.pass1" ng-required="true"><br>
+    <p ng-show="rgForm.pass1.$touched && rgForm.pass1.$invalid">Password1 is required</p>
+    <input type="password" name="pass2" placeholder="Type again the password" ng-model="user.pass2" ng-required="true"><br>
+    <p ng-show="rgForm.pass2.$touched && rgForm.pass2.$invalid ">Password2 is required</p>
+
+    </fieldlist>
+    <input type="submit" value="Register" ng-disabled="rgForm.$touched && rgForm.$invalid && rgForm.pass1 != rgForm.pass2">
+</form>

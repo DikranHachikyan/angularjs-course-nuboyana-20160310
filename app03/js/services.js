@@ -1,4 +1,34 @@
-app.factory('DataService',
+app
+.factory('AuthService',[
+    '$rootScope','$firebaseObject','$firebaseAuth','FIREBASE_URL',
+    function($rootScope,$firebaseObject,$firebaseAuth,FIREBASE_URL){
+        var ref = new Firebase(FIREBASE_URL);
+        var authObj = $firebaseAuth(ref);
+        var retObj = {
+            registerUser: function(user){
+                authObj.$createUser({
+                    'email': user.mail,
+                    'password':user.pass1
+                })// create user
+                .then(function(userData){
+                    var usrObj = ref.child('users').child(userData.uid);
+                    usrObj.set({
+                        'uid': userData.uid,
+                        'firstname': user.firstname,
+                        'lastname':user.lastname,
+                        'email':user.mail,
+                        'date':Firebase.ServerValue.TIMESTAMP
+                    });
+                    $rootScope.welcome_msg = 'Hi, ' + user.firstname;
+                })//on success
+                .catch( function(error){
+                    $rootScope.message = error.message;
+                });//on error
+            }//register user
+        }; //return object
+        return retObj;    
+}]) //Authentication Service
+.factory('DataService',
         ['$rootScope','$firebaseObject','FIREBASE_URL',
     function($rootScope,$firebaseObject,FIREBASE_URL){
      var ref = new Firebase(FIREBASE_URL );

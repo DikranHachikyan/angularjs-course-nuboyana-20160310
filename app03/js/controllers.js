@@ -1,4 +1,13 @@
 app
+.controller('Registration',[
+     '$scope','AuthService',
+      function($scope,AuthService){
+      $scope.register = function( user ){
+          //console.log('user:', user);
+          AuthService.registerUser(user);
+      };//user registration      
+    
+}])
 .controller('CategoriesList',[
     '$scope','DataService', 
     function($scope,DataService){ 

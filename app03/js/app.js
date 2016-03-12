@@ -19,6 +19,10 @@ app.config(['$routeProvider',
                    templateUrl: 'templates/item-details.html',
                    controller: 'ItemInfo'
               })//item details
+              .when('/register',{
+                templateUrl: 'templates/registration.html',
+                controller: 'Registration'
+              })
               .otherwise({
                     redirectTo: '/'
               });//
