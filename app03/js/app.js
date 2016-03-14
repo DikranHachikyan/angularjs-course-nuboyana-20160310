@@ -2,9 +2,19 @@ var app = angular.module('WebApp',[
     'ngRoute',
     'firebase'
 ])
-.constant('FIREBASE_URL', 'https://musi-store.firebaseio.com/');
-
-app.config(['$routeProvider', 
+.constant('FIREBASE_URL', 'https://musi-store.firebaseio.com/')
+.run(['$rootScope','$location', function($rootScope,$location){
+    $rootScope.$on('$routeChangeError', 
+                  function(event,current,previous,rejection){
+                    console.log('Current:', current);
+                    if( rejection == 'AUTH_REQUIRED')
+                    {
+                        $rootScope.message = 'Authentication is required';
+                        $location.path('/login');
+                    }
+    }); //on route change error
+}])
+.config(['$routeProvider', 
         function($routeProvider){
           $routeProvider
               .when('/', {
@@ -17,12 +27,22 @@ app.config(['$routeProvider',
               })//list items in category
               .when('/:catid/:itemid', {
                    templateUrl: 'templates/item-details.html',
-                   controller: 'ItemInfo'
+                   controller: 'ItemInfo',
+                   resolve: {
+                       itemDetails : ['AuthService', 
+                                      function(AuthService){
+                                        return AuthService.isLoggedIn();
+                       }]// require authentication
+                   }
               })//item details
               .when('/register',{
                 templateUrl: 'templates/registration.html',
                 controller: 'Registration'
-              })
+              })//User Registration
+              .when('/login',{
+                templateUrl: 'templates/login.html',
+                controller: 'Registration'
+              })//User Login
               .otherwise({
                     redirectTo: '/'
               });//

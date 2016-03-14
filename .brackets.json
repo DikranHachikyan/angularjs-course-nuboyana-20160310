@@ -1,0 +1,11 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app01/js/lib/angular/angular-route.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app01/js/lib/angular/angular.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app01/js/lib/angular/angular-sanitize.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app02/js/lib/angular/angular-route.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app02/js/lib/angular/angular.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app02/js/lib/angular/angular-sanitize.min.js",
+        "/home/wizard/vFolders/public_html/angularjs-projects/angularjs-webapp-NuBoyana-20160310/projects/app03/js/services.js"
+    ]
+}

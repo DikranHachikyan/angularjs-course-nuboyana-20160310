@@ -5,7 +5,15 @@ app
       $scope.register = function( user ){
           //console.log('user:', user);
           AuthService.registerUser(user);
-      };//user registration      
+      };//user registration 
+      
+      $scope.login = function(user){
+         AuthService.loginUser(user);  
+      };//user loin
+    
+      $scope.logout = function(){
+          AuthService.logout();
+      };//logout
     
 }])
 .controller('CategoriesList',[

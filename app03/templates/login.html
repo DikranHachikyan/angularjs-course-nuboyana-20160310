@@ -1,0 +1,13 @@
+<h2>Login</h2>
+<form ng-submit="login(user)" novalidate name="lgForm">
+    <fieldlist>
+    <input type="email" name="mail" placeholder="E-mail"ng-model="user.mail" ng-required="true"><br>
+    <p ng-show="lgForm.mail.$touched && lgForm.mail.$invalid">E-mail is required</p>
+
+    <input type="password" name="pass" placeholder="Password" ng-model="user.pass" ng-required="true"><br>
+    <p ng-show="lgForm.pass.$touched && lgForm.pass.$invalid">Password is required</p>
+    
+
+    </fieldlist>
+    <input type="submit" value="Login" ng-disabled="lgForm.$touched && lgForm.$invalid">
+</form>

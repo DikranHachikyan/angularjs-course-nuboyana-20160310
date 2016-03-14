@@ -1,10 +1,63 @@
 app
 .factory('AuthService',[
     '$rootScope','$firebaseObject','$firebaseAuth','FIREBASE_URL',
-    function($rootScope,$firebaseObject,$firebaseAuth,FIREBASE_URL){
+    '$location',
+    function($rootScope,$firebaseObject,$firebaseAuth,FIREBASE_URL,$location){
         var ref = new Firebase(FIREBASE_URL);
         var authObj = $firebaseAuth(ref);
+        
+        authObj.$onAuth( function(authData){
+            if( authData) //Login
+            {
+        var usrObj = $firebaseObject( ref
+                                        .child('users')
+                                        .child(authData.uid)
+                                    );
+        //console.log('User data:', usrObj);
+        usrObj.$loaded()
+              .then( function(data){
+                 $rootScope.currentUser = {
+                  'firstname': data.firstname,
+                  'lastname' : data.lastname,
+                  'uid':  data.uid,
+                  'email': data.email,
+                  'welcome_msg': 'Hallo, ' + data.firstname     
+                };
+
+                $rootScope.message = 'Hi, ' + data.firstname;
+                $location.path('/');
+              })//User data loaded successfully
+              .catch(function(error){
+                $rootScope.message = error.message;
+              }); //Error when reading user data 
+            }
+            else //logout
+            {
+              $rootScope.currentUser = null;
+              $rootScope.message = "You have been logged out";  
+            }
+        });//On authentication events (login-logout)
+        
         var retObj = {
+            isLoggedIn : function(){
+                return authObj.$requireAuth();
+            }, //is loggedin function
+            logout: function(){
+                authObj.$unauth();
+            }, //logout
+            loginUser : function(user){
+                authObj.$authWithPassword({
+                    'email': user.mail,
+                    'password': user.pass
+                })
+                .then( function(authData){
+                   
+                })//on successful login
+                .catch( function(error){
+                    $rootScope.message = error.message;
+                    $location.path('/registration');
+                });//on error
+            }, //user login
             registerUser: function(user){
                 authObj.$createUser({
                     'email': user.mail,
@@ -19,7 +72,10 @@ app
                         'email':user.mail,
                         'date':Firebase.ServerValue.TIMESTAMP
                     });
-                    $rootScope.welcome_msg = 'Hi, ' + user.firstname;
+                    retObj.loginUser({
+                        'mail': user.mail,
+                        'pass': user.pass1
+                    });
                 })//on success
                 .catch( function(error){
                     $rootScope.message = error.message;
