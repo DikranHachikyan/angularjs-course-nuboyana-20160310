@@ -11,4 +11,25 @@
         <h4>Price:{{item.price}}</h4>
     </footer>
 </article>
-<h4>User Comments:</h4>
+
+<article>
+    <header>
+       <h4>User Comments:</h4> 
+    </header>
+    <section>
+        <ul>
+            <li ng-repeat="(key,comment) in user_comments">
+                <h5>{{comment.user_name}}</h5>
+                <p>{{comment.message}}</p>
+            </li>
+        </ul>
+    </section>
+    <footer>
+        <form name="cmntForm" novalidate ng-submit="addComment(item.id)">
+            <textarea name="message" ng-model="comment.message" cols="30" ng-required="true"></textarea>
+            <p ng-show="cmntForm.message.$touched && cmntForm.message.$invalid">Comment message is required</p>
+            <br>
+            <input type="submit" value="Add Your Comment" ng-disabled="cmntForm.$invalid">
+        </form>
+    </footer>
+</article>

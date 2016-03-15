@@ -1,0 +1,24 @@
+<h2>User Profile</h2>
+<form ng-submit="editProfile(user)" novalidate name="edForm">
+    <fieldlist>
+
+    <input type="text" name="firstname" placeholder="First Name" ng-model="user.firstname" ng-required="true"><br>
+    <p ng-show="edForm.firstname.$touched && edForm.firstname.$invalid">First Name is required</p>
+
+    <input type="text" name="lastname" placeholder="Last Name" ng-model="user.lastname" ng-required="true"><br>
+    <p ng-show="edForm.lastname.$touched && edForm.lastname.$invalid">Last Name is required</p>
+
+    <input type="email" name="email" placeholder="E-mail"ng-model="user.email" ng-required="true" readonly><br>
+    <p ng-show="edForm.email.$touched && edForm.email.$invalid">E-mail is required</p>
+<label>
+<input type="checkbox" name="chpass" ng-model="user.isPasswordChange"> 
+Change Password</label>
+<br>    
+    <input type="password" name="oldpass" placeholder="Old Password" ng-model="user.oldpass" ng-required="true"  ng-show="user.isPasswordChange"><br>
+    <p ng-show="edForm.oldpass.$touched && edForm.oldpass.$invalid">Old password is required</p>
+    <input type="password" name="newpass" placeholder="Type the new pasword" ng-model="user.newpass" ng-required="true" ng-show="user.isPasswordChange"><br>
+    <p ng-show="edForm.newpass.$touched && edForm.newpass.$invalid ">The new password is required</p>
+
+    </fieldlist>
+    <input type="submit" value="Update" ng-disabled="edForm.$touched && edForm.$invalid">
+</form>

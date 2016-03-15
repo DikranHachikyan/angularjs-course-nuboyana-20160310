@@ -6,9 +6,10 @@ var app = angular.module('WebApp',[
 .run(['$rootScope','$location', function($rootScope,$location){
     $rootScope.$on('$routeChangeError', 
                   function(event,current,previous,rejection){
-                    console.log('Current:', current);
+                    //console.log('Current:', current);
                     if( rejection == 'AUTH_REQUIRED')
                     {
+                        $rootScope.current_path = '/' + current.params.catid + '/' + current.params.itemid;
                         $rootScope.message = 'Authentication is required';
                         $location.path('/login');
                     }
@@ -43,6 +44,10 @@ var app = angular.module('WebApp',[
                 templateUrl: 'templates/login.html',
                 controller: 'Registration'
               })//User Login
+              .when('/edit-profile',{
+                templateUrl: 'templates/edit-profile.html',
+                controller: 'Registration'
+              })//Edit user profile
               .otherwise({
                     redirectTo: '/'
               });//
